@@ -4,11 +4,17 @@ provider aws {
 
 module "batch6" {
     source = "josie-kadyrbergen/batch6/vpc"
-    version = "2.0.0"
+    version = "3.0.0"
     region = "us-east-2"
     vpc_cidr = "10.0.0.0/16"
     ip_on_launch = true
-    port = [22, 80, 443]
+    port = [
+        {from_port = 22, to_port = 22},
+        {from_port = 80, to_port = 80},
+        {from_port = 443, to_port = 443},
+        {from_port = 6379, to_port = 6379},
+        {from_port = 5432, to_port = 5432}
+    ]
     subnet = [
         {cidr = "10.0.1.0/24", subnet_name = "subnet1"},
         {cidr = "10.0.2.0/24", subnet_name = "subnet2"},
